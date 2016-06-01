@@ -14,6 +14,7 @@
 #ifndef WIN32
     #include <unistd.h>
     #include <time.h>
+    #include <sys/time.h>
 #else
     #include <windows.h>
 #endif
