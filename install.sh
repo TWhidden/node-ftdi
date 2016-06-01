@@ -1,9 +1,9 @@
 #!/bin/bash
 
-FTDI_LINUX_LINK='http://www.ftdichip.com/Drivers/D2XX/Linux/libftd2xx1.1.12.tar.gz'
+FTDI_LINUX_LINK='http://www.ftdichip.com/Drivers/D2XX/Linux/libftd2xx-x86_64-1.3.6.tgz'
 FTDI_LINUX_RPI='https://github.com/sim-san/node-ftdi/raw/master/libftd2xx1.1.12.RPi_Fix.tar.gz'
 FTDI_MAC_LINK='http://www.ftdichip.com/Drivers/D2XX/MacOSX/D2XX1.2.2.dmg'
-LIB_VERSION_LINUX='1.1.12'
+LIB_VERSION_LINUX='1.3.6'
 LIB_VERSION_MAC='1.2.2'
 
 echo Detected OS:
@@ -53,7 +53,7 @@ then
    tar xfz $filename -C tmp/
    if [ "$platform" == '64bit' ]
    then
-   	buildPath="tmp/release/build/x86_64/"
+   	buildPath="tmp/release/build/"
    elif [ "$platform" == 'RPi' ]
    then
       	buildPath="tmp/release/build/arm926/"
