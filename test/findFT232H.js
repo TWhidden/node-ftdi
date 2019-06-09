@@ -26,8 +26,19 @@ ftdiApi.find(vendorId, productId, (err, devices)=>{
     console.log("*******************");
 
     for(var i = 0; i < devices.length; i++){
-        
+        var device = devices[i];
+        console.log(`Device ${i}: ${JSON.stringify(device)}`);
+    }
+});
 
+// 0 for vendorId and productId will find all
+ftdiApi.find(0, 0, (err, devices)=>{
+
+    console.log("\n*******************");
+    console.log("Api find Any");
+    console.log("*******************");
+
+    for(var i = 0; i < devices.length; i++){
         var device = devices[i];
         console.log(`Device ${i}: ${JSON.stringify(device)}`);
     }
