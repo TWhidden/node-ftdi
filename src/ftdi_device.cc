@@ -188,7 +188,8 @@ class ReadWorker : public Nan::AsyncWorker {
       Local<Object> globalObj = Nan::GetCurrentContext()->Global();
       Local<Function> bufferConstructor = Local<Function>::Cast(globalObj->Get(Nan::New<String>("Buffer").ToLocalChecked()));
       Handle<Value> constructorArgs[3] = { slowBuffer, Nan::New<Number>(baton->length), Nan::New<Number>(0) };
-      Local<Object> actualBuffer = bufferConstructor->NewInstance(3, constructorArgs);
+      Local<Object> actualBuffer = Nan::NewInstance(bufferConstructor, 3, constructorArgs).ToLocalChecked();
+      //Local<Object> actualBuffer = bufferConstructor->NewInstance(3, constructorArgs);
       argv[1] = actualBuffer;
 
       if(status != FT_OK)
@@ -768,15 +769,15 @@ void FtdiDevice::ExtractDeviceSettings(Local<Object> options)
 
   if(options->Has(baudrate))
   {
-    deviceParams.baudRate = options->Get(baudrate)->ToInt32()->Int32Value();
+    deviceParams.baudRate = options->Get(baudrate)->ToInt32(Nan::GetCurrentContext()).ToLocalChecked()->Value();
   }
   if(options->Has(databits))
   {
-    deviceParams.wordLength = GetWordLength(options->Get(databits)->ToInt32()->Int32Value());
+    deviceParams.wordLength = GetWordLength(options->Get(databits)->ToInt32(Nan::GetCurrentContext()).ToLocalChecked()->Value());
   }
   if(options->Has(stopbits))
   {
-    deviceParams.stopBits = GetStopBits(options->Get(stopbits)->ToInt32()->Int32Value());
+    deviceParams.stopBits = GetStopBits(options->Get(stopbits)->ToInt32(Nan::GetCurrentContext()).ToLocalChecked()->Value());
   }
   if(options->Has(parity))
   {
@@ -791,7 +792,7 @@ void FtdiDevice::ExtractDeviceSettings(Local<Object> options)
 
   if(options->Has(bitmode))
   {
-      deviceParams.bitMode = options->Get(bitmode)->ToInt32()->Int32Value();
+      deviceParams.bitMode = options->Get(bitmode)->ToInt32(Nan::GetCurrentContext()).ToLocalChecked()->Value();
       hasBitSettings = true;
   } else {
       hasBitSettings = false;
@@ -799,7 +800,7 @@ void FtdiDevice::ExtractDeviceSettings(Local<Object> options)
 
   if(hasBitSettings && options->Has(bitmask))
   {
-      deviceParams.bitMask = options->Get(bitmask)->ToInt32()->Int32Value();
+      deviceParams.bitMask = options->Get(bitmask)->ToInt32(Nan::GetCurrentContext()).ToLocalChecked()->Value();
       hasBitSettings = true;
   }
 
